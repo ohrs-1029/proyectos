@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adolescencia Segura: Previene Riesgos</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f4f8; /* Light blue-gray background */
+            color: #334155; /* Darker text */
+            line-height: 1.6;
+        }
+        .section-card {
+            background-color: #ffffff;
+            border-radius: 1.5rem; /* More rounded corners */
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1); /* Stronger soft shadow */
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+            transition: all 0.3s ease-in-out;
+        }
+        .section-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+        }
+        .gradient-text {
+            background: linear-gradient(to right, #6366f1, #a851f7); /* Indigo to Purple gradient */
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .btn-primary {
+            background: linear-gradient(to right, #6366f1, #a851f7);
+            color: white;
+            padding: 0.85rem 1.8rem;
+            border-radius: 0.75rem;
+            font-weight: 700; /* Bolder */
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(99, 102, 241, 0.4);
+            letter-spacing: 0.05em; /* Slightly wider text */
+        }
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(99, 102, 241, 0.6);
+            filter: brightness(1.1);
+        }
+        .tab-button {
+            padding: 0.75rem 1.25rem;
+            border-radius: 0.75rem; /* More rounded */
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            color: #4b5563; /* Darker gray for inactive */
+            background-color: #e2e8f0; /* Light gray background */
+        }
+        .tab-button.active {
+            background-color: #6366f1;
+            color: white;
+            box-shadow: 0 3px 6px rgba(99, 102, 241, 0.3);
+        }
+        .tab-button:not(.active):hover {
+            background-color: #c7d2fe; /* Lighter indigo on hover */
+            color: #312e81; /* Darker text on hover */
+        }
+        .hidden {
+            display: none;
+        }
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed; /* Stay in place */
+            z-index: 1000; /* Sit on top */
+            left: 0;
+            top: 0;
+            width: 100%; /* Full width */
+            height: 100%; /* Full height */
+            overflow: auto; /* Enable scroll if needed */
+            background-color: rgba(0,0,0,0.6); /* Darker overlay */
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.3s ease-out;
+        }
+        .modal.is-active {
+            display: flex; 
+            opacity: 1;
+        }
+        .modal-content {
+            background-color: #fefefe;
+            margin: auto;
+            padding: 2.5rem;
+            border-radius: 1.5rem; /* More rounded */
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3); /* Stronger shadow */
+            width: 90%; /* Responsive width */
+            max-width: 700px; /* Max width for larger screens */
+            position: relative;
+            transform: translateY(20px);
+            opacity: 0;
+            transition: transform 0.3s ease-out, opacity 0.3s ease-out;
+        }
+        .modal.is-active .modal-content {
+            transform: translateY(0);
+            opacity: 1;
+        }
+        .close-button {
+            color: #94a3b8; /* Light gray */
+            position: absolute;
+            top: 1.2rem;
+            right: 1.2rem;
+            font-size: 2rem; /* Larger */
+            font-weight: bold;
+            cursor: pointer;
+            transition: color 0.2s ease;
+        }
+        .close-button:hover,
+        .close-button:focus {
+            color: #334155; /* Darker on hover */
+        }
+        .icon-emoji {
+            font-size: 1.5rem; /* Larger emojis */
+            vertical-align: middle;
+            margin-right: 0.5rem;
+        }
+        .hero-section {
+            background: linear-gradient(to right, #6366f1, #a851f7);
+            color: white;
+            padding: 4rem 2rem;
+            border-radius: 1.5rem;
+            margin-bottom: 3rem;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(99, 102, 241, 0.4);
+        }
+        .hero-section h2 {
+            font-size: 2.8rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+        }
+        .hero-section p {
+            font-size: 1.3rem;
+            opacity: 0.9;
+        }
+        .section-image {
+            width: 100%;
+            height: 180px; /* Fixed height for consistency */
+            object-fit: cover; /* Ensures image covers the area */
+            border-radius: 1rem; /* Rounded corners for images */
+            margin-bottom: 1.5rem;
+        }
+    </style>
+</head>
+<body class="p-4 sm:p-8">
+
+    <header class="text-center mb-10">
+        <h1 class="text-4xl sm:text-5xl font-extrabold mb-4 gradient-text">Adolescencia Segura</h1>
+        <p class="text-lg sm:text-xl text-gray-700">¡Tu Guía para Crecer sin Riesgos!</p>
+    </header>
+
+    <main class="max-w-5xl mx-auto">
+        <section class="hero-section">
+            <h2>¡Crece Fuerte y Seguro!</h2>
+            <p>Descubre herramientas y conocimientos para navegar la adolescencia con confianza y bienestar.</p>
+            <button class="btn-primary mt-6" onclick="scrollToSection('sections-container')">Empezar Ahora</button>
+        </section>
+
+        <section id="introduction" class="section-card text-center">
+            <h2 class="text-2xl sm:text-3xl font-bold mb-4 text-gray-800">Bienvenido a tu espacio de prevención</h2>
+            <p class="text-md text-gray-600 mb-6">Aquí encontrarás información esencial y recursos para navegar los desafíos de la adolescencia de manera segura y saludable. ¡Explora las secciones y empodérate con conocimiento!</p>
+        </section>
+
+        <div id="sections-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mt-10">
+            <!-- Sexualidad Section -->
+            <section id="sexualidad" class="section-card flex flex-col justify-between items-center text-center">
+                <img src="https://placehold.co/400x180/6366f1/ffffff?text=Sexualidad" alt="" class="section-image">
+                <h3 class="text-xl sm:text-2xl font-bold mb-4 text-purple-700"><span class="icon-emoji">❤️</span> Sexualidad Responsable</h3>
+                <p class="text-gray-700 mb-6 flex-grow">Aprende sobre consentimiento, métodos anticonceptivos, ITS y cómo protegerte.</p>
+                <button class="btn-primary" onclick="showModal('sexualidadModal')">Explorar</button>
+            </section>
+
+            <!-- Violencia Section -->
+            <section id="violencia" class="section-card flex flex-col justify-between items-center text-center">
+                <img src="https://placehold.co/400x180/dc2626/ffffff?text=No+a+la+Violencia" alt="" class="section-image">
+                <h3 class="text-xl sm:text-2xl font-bold mb-4 text-red-700"><span class="icon-emoji">🛡️</span> Alto a la Violencia</h3>
+                <p class="text-gray-700 mb-6 flex-grow">Identifica los tipos de violencia, señales de alerta y dónde buscar ayuda.</p>
+                <button class="btn-primary" onclick="showModal('violenciaModal')">Explorar</button>
+            </section>
+
+            <!-- Trastornos Alimenticios Section -->
+            <section id="trastornos" class="section-card flex flex-col justify-between items-center text-center">
+                <img src="https://placehold.co/400x180/22c55e/ffffff?text=Salud+Alimenticia" alt="" class="section-image">
+                <h3 class="text-xl sm:text-2xl font-bold mb-4 text-green-700"><span class="icon-emoji">🍎</span> Imagen Corporal Saludable</h3>
+                <p class="text-gray-700 mb-6 flex-grow">Desarrolla una relación positiva con tu cuerpo y aprende a identificar trastornos alimenticios.</p>
+                <button class="btn-primary" onclick="showModal('trastornosModal')">Explorar</button>
+            </section>
+
+            <!-- Adicciones Section -->
+            <section id="adicciones" class="section-card flex flex-col justify-between items-center text-center">
+                <img src="https://placehold.co/400x180/3b82f6/ffffff?text=Libre+de+Adicciones" alt="" class="section-image">
+                <h3 class="text-xl sm:text-2xl font-bold mb-4 text-blue-700"><span class="icon-emoji">🚫</span> Libre de Adicciones</h3>
+                <p class="text-gray-700 mb-6 flex-grow">Información sobre sustancias, riesgos y cómo decir "no".</p>
+                <button class="btn-primary" onclick="showModal('adiccionesModal')">Explorar</button>
+            </section>
+        </div>
+
+        <!-- Contact Section -->
+        <section id="contact" class="section-card text-center mt-10">
+            <h3 class="text-xl sm:text-2xl font-bold mb-4 text-gray-800"><span class="icon-emoji">🤝</span> ¿Necesitas Más Ayuda?</h3>
+            <p class="text-gray-700 mb-6">Si tú o alguien que conoces necesita apoyo inmediato, no dudes en buscar ayuda profesional. Aquí hay algunos recursos generales:</p>
+            <ul class="list-disc list-inside text-left mx-auto max-w-sm text-gray-700 space-y-2">
+                <li><strong class="text-indigo-600">Líneas de ayuda de emergencia:</strong> Busca el número de tu país.</li>
+                <li><strong class="text-indigo-600">Centros de salud locales:</strong> Para orientación y atención médica.</li>
+                <li><strong class="text-indigo-600">Psicólogos y terapeutas:</strong> Para apoyo en salud mental.</li>
+                <li><strong class="text-indigo-600">Organizaciones de apoyo:</strong> Busca ONG especializadas en adolescencia.</li>
+            </ul>
+        </section>
+
+    </main>
+
+    <footer class="text-center text-gray-500 text-sm mt-10 pb-4">
+        <p>&copy; 2025 Adolescencia Segura. Todos los derechos reservados.</p>
+    </footer>
+
+    <!-- Modals for each section -->
+
+    <!-- Sexualidad Modal -->
+    <div id="sexualidadModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="sexualidadModalTitle">
+        <div class="modal-content">
+            <span class="close-button" onclick="closeModal('sexualidadModal')">&times;</span>
+            <h2 id="sexualidadModalTitle" class="text-3xl font-bold mb-6 gradient-text"><span class="icon-emoji">❤️</span> Sexualidad Responsable: Información y Cuidado</h2>
+
+            <div class="flex space-x-4 mb-6 justify-center flex-wrap gap-y-2">
+                <button class="tab-button active" onclick="openTab(event, 'sexualidad-its')">ITS</button>
+                <button class="tab-button" onclick="openTab(event, 'sexualidad-embarazo')">Embarazo</button>
+                <button class="tab-button" onclick="openTab(event, 'sexualidad-consentimiento')">Consentimiento</button>
+            </div>
+
+            <div id="sexualidad-its" class="tab-content">
+                <h3 class="text-xl font-semibold mb-3 text-gray-800">Infecciones de Transmisión Sexual (ITS)</h3>
+                <p class="mb-2 text-gray-700">Las ITS son infecciones que se transmiten principalmente a través del contacto sexual. Algunas comunes incluyen VIH, VPH, Clamidia y Gonorrea.</p>
+                <p class="mb-4 text-gray-700"><strong class="text-indigo-600">Prevención:</strong> El uso correcto y consistente del condón es clave. Las pruebas regulares son importantes si eres sexualmente activo. La vacuna contra el VPH puede prevenir algunos tipos de cáncer.</p>
+                <p class="text-gray-700">Si sospechas que tienes una ITS, busca atención médica de inmediato. Los síntomas pueden variar, pero no siempre son visibles.</p>
+            </div>
+
+            <div id="sexualidad-embarazo" class="tab-content hidden">
+                <h3 class="text-xl font-semibold mb-3 text-gray-800">Embarazo no Planeado</h3>
+                <p class="mb-2 text-gray-700">Un embarazo no planeado en la adolescencia puede tener un impacto significativo en la vida. Es fundamental conocer y utilizar métodos anticonceptivos.</p>
+                <p class="mb-4 text-gray-700"><strong class="text-indigo-600">Métodos Anticonceptivos:</strong> Condones, píldoras, implantes, DIU, inyecciones. Cada uno tiene su efectividad y forma de uso. Consulta a un profesional de la salud para elegir el adecuado.</p>
+                <p class="text-gray-700">Hablar con tu pareja, padres o un consejero sobre tus opciones y decisiones es vital. Recuerda que la planificación es poder.</p>
+            </div>
+
+            <div id="sexualidad-consentimiento" class="tab-content hidden">
+                <h3 class="text-xl font-semibold mb-3 text-gray-800">El Poder del Consentimiento</h3>
+                <p class="mb-2 text-gray-700">El consentimiento es un "sí" entusiasta, claro y voluntario a la actividad sexual. Es fundamental que sea libre, informado, específico y revocable en cualquier momento.</p>
+                <p class="mb-4 text-gray-700"><strong class="text-indigo-600">¿Qué NO es consentimiento?:</strong> Silencio, no resistencia, estar bajo la influencia de drogas/alcohol, presión, miedo o amenazas.</p>
+                <p class="text-gray-700">La comunicación abierta y el respeto mutuo son la base de cualquier interacción sexual sana. Siempre pregunta y asegúrate de que haya consentimiento explícito.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Violencia Modal -->
+    <div id="violenciaModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="violenciaModalTitle">
+        <div class="modal-content">
+            <span class="close-button" onclick="closeModal('violenciaModal')">&times;</span>
+            <h2 id="violenciaModalTitle" class="text-3xl font-bold mb-6 gradient-text"><span class="icon-emoji">🛡️</span> Alto a la Violencia: Un Ambiente Seguro es Posible</h2>
+
+            <div class="flex space-x-4 mb-6 justify-center flex-wrap gap-y-2">
+                <button class="tab-button active" onclick="openTab(event, 'violencia-tipos')">Tipos</button>
+                <button class="tab-button" onclick="openTab(event, 'violencia-senales')">Señales</button>
+                <button class="tab-button" onclick="openTab(event, 'violencia-quehacer')">¿Qué Hacer?</button>
+            </div>
+
+            <div id="violencia-tipos" class="tab-content">
+                <h3 class="text-xl font-semibold mb-3 text-gray-800">Conoce los Tipos de Violencia</h3>
+                <ul class="list-disc list-inside space-y-2 text-gray-700">
+                    <li><strong class="text-indigo-600">Física:</strong> Golpes, empujones, cualquier agresión corporal.</li>
+                    <li><strong class="text-indigo-600">Psicológica/Emocional:</b> Humillación, amenazas, control excesivo, manipulación, acoso (bullying, ciberacoso).</li>
+                    <li><strong class="text-indigo-600">Sexual:</strong> Abuso, acoso, violación. Incluye la presión para actividades sexuales no deseadas.</li>
+                    <li><strong class="text-indigo-600">De Género:</strong> Agresiones basadas en el sexo o género de la persona, como el machismo en relaciones.</li>
+                </ul>
+                <p class="mt-4 text-gray-700">La violencia puede ocurrir en cualquier lugar: en casa, en la escuela, con amigos o en las redes sociales.</p>
+            </div>
+
+            <div id="violencia-senales" class="tab-content hidden">
+                <h3 class="text-xl font-semibold mb-3 text-gray-800">Señales de Alerta</h3>
+                <p class="mb-2 text-gray-700">Presta atención a estas señales si crees que tú o alguien que conoces podría estar sufriendo violencia:</p>
+                <ul class="list-disc list-inside space-y-2 text-gray-700">
+                    <li>Cambios drásticos de humor o comportamiento.</li>
+                    <li>Retraimiento social, aislamiento de amigos y familia.</li>
+                    <li>Lesiones inexplicables o excusas constantes.</li>
+                    <li>Bajo rendimiento escolar o absentismo.</li>
+                    <li>Miedo o ansiedad inusual ante ciertas personas o situaciones.</li>
+                    <li>Dependencia excesiva o control por parte de una pareja.</li>
+                    <li>Mensajes o comentarios hirientes en redes sociales.</li>
+                </ul>
+            </div>
+
+            <div id="violencia-quehacer" class="tab-content hidden">
+                <h3 class="text-xl font-semibold mb-3 text-gray-800">¿Qué Hacer si Sufres o Conoces Violencia?</h3>
+                <p class="mb-2 text-gray-700">No estás solo/a. Hay ayuda disponible:</p>
+                <ul class="list-disc list-inside space-y-2 text-gray-700">
+                    <li><strong class="text-indigo-600">Habla con un adulto de confianza:</strong> Padres, maestros, consejeros escolares, familiares.</li>
+                    <li><strong class="text-indigo-600">Busca ayuda profesional:</strong> Psicólogos, líneas de ayuda para víctimas de violencia.</li>
+                    <li><strong class="text-indigo-600">Documenta la violencia:</strong> Guarda mensajes, capturas de pantalla, anota fechas y detalles.</li>
+                    <li><strong class="text-indigo-600">Busca lugares seguros:</strong> Aléjate de la situación o de la persona violenta.</li>
+                    <li><strong class="text-indigo-600">Conoce tus derechos:</strong> Infórmate sobre cómo la ley te protege.</li>
+                </ul>
+                <p class="mt-4 text-gray-700">Recuerda: pedir ayuda es un acto de valentía.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Trastornos Alimenticios Modal -->
+    <div id="trastornosModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="trastornosModalTitle">
+        <div class="modal-content">
+            <span class="close-button" onclick="closeModal('trastornosModal')">&times;</span>
+            <h2 id="trastornosModalTitle" class="text-3xl font-bold mb-6 gradient-text"><span class="icon-emoji">🍎</span> Imagen Corporal Saludable: Amando Quien Eres</h2>
+
+            <div class="flex space-x-4 mb-6 justify-center flex-wrap gap-y-2">
+                <button class="tab-button active" onclick="openTab(event, 'trastornos-que-son')">¿Qué Son?</button>
+                <button class="tab-button" onclick="openTab(event, 'trastornos-senales')">Señales</button>
+                <button class="tab-button" onclick="openTab(event, 'trastornos-ayuda')">¿Cómo Pedir Ayuda?</button>
+            </div>
+
+            <div id="trastornos-que-son" class="tab-content">
+                <h3 class="text-xl font-semibold mb-3 text-gray-800">¿Qué son los Trastornos Alimenticios?</h3>
+                <p class="mb-2 text-gray-700">Son enfermedades mentales graves que afectan el comportamiento alimentario. No son solo "dietas" o "caprichos".</p>
+                <ul class="list-disc list-inside space-y-2 text-gray-700">
+                    <li><strong class="text-indigo-600">Anorexia Nerviosa:</strong> Restricción extrema de alimentos, miedo intenso a engordar, imagen corporal distorsionada.</li>
+                    <li><strong class="text-indigo-600">Bulimia Nerviosa:</strong> Atracones (comer grandes cantidades) seguidos de conductas compensatorias (vómitos, laxantes, ejercicio excesivo).</li>
+                    <li><strong class="text-indigo-600">Trastorno por Atracón:</b> Episodios de comer compulsivamente sin conductas compensatorias, generando malestar y culpa.</li>
+                </ul>
+                <p class="mt-4 text-gray-700">Estos trastornos pueden causar daños físicos y emocionales graves.</p>
+            </div>
+
+            <div id="trastornos-senales" class="tab-content hidden">
+                <h3 class="text-xl font-semibold mb-3 text-gray-800">Señales de Alerta</h3>
+                <p class="mb-2 text-gray-700">Estar atento a estas señales en ti o en tus amigos puede marcar la diferencia:</p>
+                <ul class="list-disc list-inside space-y-2 text-gray-700">
+                    <li>Preocupación excesiva por el peso, la forma del cuerpo o las calorías.</li>
+                    <li>Saltarse comidas, dietas restrictivas extremas o rituales extraños al comer.</li>
+                    <li>Cambios drásticos de peso (pérdida o aumento).</li>
+                    <li>Aislamiento social, evitar comidas con amigos o familia.</li>
+                    <li>Ejercicio excesivo y compulsivo.</li>
+                    <li>Visitas frecuentes al baño después de comer.</li>
+                    <li>Uso de laxantes, diuréticos o pastillas para adelgazar.</li>
+                    <li>Irritabilidad, ansiedad o depresión.</li>
+                </ul>
+            </div>
+
+            <div id="trastornos-ayuda" class="tab-content hidden">
+                <h3 class="text-xl font-semibold mb-3 text-gray-800">¿Cómo Pedir Ayuda?</h3>
+                <p class="mb-2 text-gray-700">La recuperación es posible y comienza con el primer paso: buscar ayuda.</p>
+                <ul class="list-disc list-inside space-y-2 text-gray-700">
+                    <li><strong class="text-indigo-600">Habla con un adulto de confianza:</strong> Padres, tutores, maestros.</li>
+                    <li><strong class="text-indigo-600">Consulta a un profesional:</strong> Un médico, nutricionista/dietista o psicólogo especializado en trastornos alimenticios.</li>
+                    <li><strong class="text-indigo-600">Apoyo entre pares:</strong> Busca grupos de apoyo o habla con amigos cercanos.</li>
+                    <li><strong class="text-indigo-600">Concéntrate en la salud, no en el peso:</b> Promueve una imagen corporal positiva y el bienestar general.</li>
+                    </ul>
+                <p class="mt-4 text-gray-700">Tu valor no se define por tu peso o tu apariencia.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Adicciones Modal -->
+    <div id="adiccionesModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="adiccionesModalTitle">
+        <div class="modal-content">
+            <span class="close-button" onclick="closeModal('adiccionesModal')">&times;</span>
+            <h2 id="adiccionesModalTitle" class="text-3xl font-bold mb-6 gradient-text"><span class="icon-emoji">🚫</span> Libre de Adicciones: Elige tu Camino Saludable</h2>
+
+            <div class="flex space-x-4 mb-6 justify-center flex-wrap gap-y-2">
+                <button class="tab-button active" onclick="openTab(event, 'adicciones-sustancias')">Sustancias Comunes</button>
+                <button class="tab-button" onclick="openTab(event, 'adicciones-riesgos')">Riesgos</button>
+                <button class="tab-button" onclick="openTab(event, 'adicciones-prevenir')">Prevención y Ayuda</button>
+            </div>
+
+            <div id="adicciones-sustancias" class="tab-content">
+                <h3 class="text-xl font-semibold mb-3 text-gray-800">Sustancias Comunes y sus Efectos</h3>
+                <p class="mb-2 text-gray-700">Conoce lo que consumes o lo que te ofrecen. La información es poder.</p>
+                <ul class="list-disc list-inside space-y-2 text-gray-700">
+                    <li><strong class="text-indigo-600">Alcohol:</strong> Depresor del sistema nervioso central. Puede llevar a intoxicación, accidentes, y a largo plazo, daño hepático y cerebral.</li>
+                    <li><strong class="text-indigo-600">Tabaco y Vapeo:</strong> Contienen nicotina, altamente adictiva. Daña los pulmones, corazón y aumenta el riesgo de cáncer.</li>
+                    <li><strong class="text-indigo-600">Marihuana:</strong> Afecta la memoria, el aprendizaje y la concentración. Su uso temprano puede influir en el desarrollo cerebral.</li>
+                    <li><strong class="text-indigo-600">Otras drogas (cocaína, metanfetaminas, inhalables):</strong> Efectos devastadores en el cerebro y el cuerpo, alto riesgo de sobredosis y dependencia rápida.</li>
+                </ul>
+            </div>
+
+            <div id="adicciones-riesgos" class="tab-content hidden">
+                <h3 class="text-xl font-semibold mb-3 text-gray-800">Riesgos de las Adicciones</h3>
+                <p class="mb-2 text-gray-700">Las adicciones no solo afectan la salud, sino todos los aspectos de tu vida:</p>
+                <ul class="list-disc list-inside space-y-2 text-gray-700">
+                    <li><strong class="text-indigo-600">Salud Física y Mental:</strong> Daño a órganos, empeoramiento de la depresión, ansiedad, desarrollo de trastornos psicóticos.</li>
+                    <li><strong class="text-indigo-600">Rendimiento Académico:</strong> Dificultad para concentrarse, bajas calificaciones, abandono escolar.</li>
+                    <li><strong class="text-indigo-600">Relaciones Personales:</strong> Conflictos familiares, pérdida de amistades, aislamiento.</li>
+                    <li><strong class="text-indigo-600">Legales y Económicos:</b> Arrestos, multas, dependencia económica.</li>
+                    <li><strong class="text-indigo-600">Conductas de Riesgo:</strong> Mayor probabilidad de accidentes, actividad sexual sin protección.</li>
+                </ul>
+            </div>
+
+            <div id="adicciones-prevenir" class="tab-content hidden">
+                <h3 class="text-xl font-semibold mb-3 text-gray-800">Prevención y Ayuda</h3>
+                <p class="mb-2 text-gray-700">Puedes prevenir las adicciones y, si ya es un problema, hay formas de salir:</p>
+                <ul class="list-disc list-inside space-y-2 text-gray-700">
+                    <li><strong class="text-indigo-600">Aprende a decir NO:</strong> Desarrolla habilidades para rechazar ofertas de drogas o alcohol. Sé asertivo/a.</li>
+                    <li><strong class="text-indigo-600">Busca alternativas:</strong> Deportes, pasatiempos, arte, música, voluntariado. Encuentra actividades que te llenen.</li>
+                    <li><strong class="text-indigo-600">Elige bien tus amistades:</strong> Rodéate de personas que te apoyen y te impulsen a ser mejor.</li>
+                    <li><strong class="text-indigo-600">Busca ayuda profesional:</strong> Si tú o alguien que conoces tiene un problema, un médico, psicólogo o centro de rehabilitación puede ofrecer tratamiento.</li>
+                    <li><strong class="text-indigo-600">Habla abiertamente:</strong> Comunica tus preocupaciones a un adulto de confianza.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script type="module">
+        // JavaScript para la interactividad de la página web
+        // Función para mostrar un modal específico
+        function showModal(modalId) {
+            const modal = document.getElementById(modalId);
+            modal.style.display = 'flex'; // Primero, haz que sea visible para que las transiciones funcionen
+            // Pequeño retardo para asegurar que el display esté aplicado antes de añadir la clase 'is-active'
+            setTimeout(() => {
+                modal.classList.add('is-active'); 
+            }, 10);
+            
+            // Configura la primera pestaña como activa al abrir el modal
+            const firstTabButton = modal.querySelector('.tab-button');
+            const firstTabContent = modal.querySelector('.tab-content');
+
+            // Desactiva todas las pestañas y oculta su contenido primero
+            modal.querySelectorAll('.tab-button').forEach(btn => btn.classList.remove('active'));
+            modal.querySelectorAll('.tab-content').forEach(content => content.classList.add('hidden'));
+
+            // Activa el primer botón de pestaña y muestra su contenido
+            if (firstTabButton) {
+                firstTabButton.classList.add('active');
+            }
+            if (firstTabContent) {
+                firstTabContent.classList.remove('hidden');
+            }
+        }
+
+        // Función para cerrar un modal específico
+        function closeModal(modalId) {
+            const modal = document.getElementById(modalId);
+            modal.classList.remove('is-active'); // Remueve la clase 'is-active' para iniciar la transición de salida
+            // Espera a que la transición termine antes de ocultar completamente el modal
+            setTimeout(() => {
+                modal.style.display = 'none';
+            }, 300); // Coincide con la duración de la transición CSS (0.3s)
+        }
+
+        // Función para abrir una pestaña dentro de un modal
+        function openTab(evt, tabName) {
+            // Oculta todos los contenidos de las pestañas en el modal actual
+            const tabContents = evt.currentTarget.closest('.modal-content').querySelectorAll('.tab-content');
+            tabContents.forEach(tabContent => tabContent.classList.add('hidden'));
+
+            // Remueve la clase "active" de todos los botones de pestaña en el modal actual
+            const tabButtons = evt.currentTarget.closest('.modal-content').querySelectorAll('.tab-button');
+            tabButtons.forEach(tabButton => tabButton.classList.remove('active'));
+
+            // Muestra el contenido de la pestaña seleccionada y activa el botón correspondiente
+            document.getElementById(tabName).classList.remove('hidden');
+            evt.currentTarget.classList.add('active');
+        }
+
+        // Función para desplazamiento suave a una sección de la página
+        function scrollToSection(sectionId) {
+            document.getElementById(sectionId).scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Hacer las funciones globalmente accesibles para los atributos onclick en HTML
+        window.showModal = showModal;
+        window.closeModal = closeModal;
+        window.openTab = openTab;
+        window.scrollToSection = scrollToSection;
+    </script>
+</body>
+</html>
